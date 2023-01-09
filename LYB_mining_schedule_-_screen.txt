@@ -1,0 +1,741 @@
+local json = require("dkjson")
+local rslib = require('rslib')
+
+
+
+if not init then
+    info = {}
+    for ic=0,6 do
+        info[ic] = {}
+        for ir=0,13 do
+            info[ic][ir] = 0
+        end
+    end
+    -----------     MONDAY             TUESDAY        WEDNESDAY       THURSDAY       FRIDAY          SATURDAY          SUNDAY
+--[[ROW 1 ]]    info[0][0] = "LYB_Teoma_Natron"    info[1][0] = "LYB_Alioth_T2"    info[2][0] = "Alioth Factory Miners" info[3][0] = "LYB_Teoma_Natron" info[4][0] = "LYB_Alioth_T2" info[5][0] = "Alioth Factory Miners" info[6][0] = "LYB Thades Malachite"
+--[[ROW 2 ]]    info[0][1] = "LYB_Teoma_Petalite_1"    info[1][1] = "LYB_Alioth_T3"    info[2][1] = "LYB Haven Wyn" info[3][1] = "LYB_Teoma_Petalite_1" info[4][1] = "LYB_Alioth_T3" info[5][1] = "LYB Haven Wyn" info[6][1] = "LYB Madis Chromite 2"
+--[[ROW 3 ]]    info[0][2] = "LYB Madis Pyrite"    info[1][2] = "LYB Madis Pyrite"    info[2][2] = "LYB_Haven Mining_HVM" info[3][2] = "LYB Thades Malachite" info[4][2] = "LYB Madis Chromite 2" info[5][2] = "LYB_Haven Mining_HVM" info[6][2] = "LYB Madis Chromite"
+--[[ROW 4 ]]    info[0][3] = "LYB MP 2"    info[1][3] = "LYB MP 2"    info[2][3] = "LYB Madis Pyrite" info[3][3] = "LYB Madis Pyrite" info[4][3] = "LYB Madis Chromite" info[5][3] = "LYB Madis Pyrite" info[6][3] = "LYB Madis Pyrite"
+--[[ROW 5 ]]    info[0][4] = "LYB_Shadow_Tear"    info[1][4] = "LYB_Shadow_Tear"    info[2][4] = "LYB MP 2" info[3][4] = "LYB MP 2" info[4][4] = "LYB Madis Pyrite" info[5][4] = "LYB MP 2" info[6][4] = "LYB MP 2"
+--[[ROW 6 ]]    info[0][5] = ""    info[1][5] = ""    info[2][5] = "LYB_Shadow_Tear" info[3][5] = "LYB_Shadow_Tear" info[4][5] = "LYB MP 2" info[5][5] = "LYB_Shadow_Tear" info[6][5] = "LYB_Shadow_Tear"
+--[[ROW 7 ]]    info[0][6] = ""    info[1][6] = ""    info[2][6] = "" info[3][6] = "" info[4][6] = "LYB_Shadow_Tear" info[5][6] = "" info[6][6] = ""
+--[[ROW 8 ]]    info[0][7] = ""    info[1][7] = ""    info[2][7] = "" info[3][7] = "" info[4][7] = "" info[5][7] = "" info[6][7] = ""
+--[[ROW 9 ]]    info[0][8] = ""    info[1][8] = ""    info[2][8] = "" info[3][8] = "" info[4][8] = "" info[5][8] = "" info[6][8] = ""
+--[[ROW 10 ]]   info[0][9] = ""    info[1][9] = ""    info[2][9] = "" info[3][9] = "" info[4][9] = "" info[5][9] = "" info[6][9] = ""
+--[[ROW 11 ]]   info[0][10] = ""    info[1][10] = ""    info[2][10] = "" info[3][10] = "" info[4][10] = "" info[5][10] = "" info[6][10] = ""   
+--[[ROW 12 ]]   info[0][11] = ""    info[1][11] = ""    info[2][11] = "" info[3][11] = "" info[4][11] = "" info[5][11] = "" info[6][11] = ""
+--[[ROW 13 ]]   info[0][12] = ""    info[1][12] = ""    info[2][12] = "" info[3][12] = "" info[4][12] = "" info[5][12] = "" info[6][12] = ""
+--[[ROW 14 ]]   info[0][13] = ""    info[1][13] = ""    info[2][13] = "" info[3][13] = "" info[4][13] = "" info[5][13] = "" info[6][13] = ""
+end    
+
+
+
+
+if not Toggle then
+    local toggle = {}
+    toggle.__index = toggle
+    function Toggle(x, y, width, height, defaultState, label, font, onClick)
+        self = {}
+        self.x = x or 0
+        self.y = y or 0
+        self.h = height or 0
+        self.w = width or 0
+        self.state = defaultState or false
+        self.label = label or ""
+        self.onClick = onClick
+        self.font = font or function() return loadFont("Montserrat",self.h * 5.5) end
+        return setmetatable(self, toggle)
+    end
+    
+    local function getFont()
+        local font = self.font
+        if type(font) == "function" then
+            font = self.font()
+        end
+        return font
+    end
+    
+    -- draw method that draws the toggle on the screen unit
+    function toggle:draw(layer)
+        -- Collect cursor coordinates
+        local cx, cy = getCursor()
+        
+        -- check if the mouse is over the button
+        if cx >= self.x and cx <= self.x + self.w and cy >= self.y and cy <= self.y + self.h then
+        
+            -- handle the click action
+            if getCursorReleased() then
+                self.state = not self.state
+                if self.onClick ~= nil then
+                    self.onClick()
+                end
+            end
+            
+            -- set the mouseover colors
+            if self.state and getCursorDown() then
+                setNextFillColor(layer, 1, 0.6, 0.8, 1)
+            elseif getCursorDown() then
+                setNextFillColor(layer, 0.6, 1, 0.8, 1)
+            elseif self.state then
+                setNextFillColor(layer, 1, 0.2, 0.2, 1)
+            else
+                setNextFillColor(layer, 0.2, 0.8, 0.2, 1)
+            end
+            
+        elseif self.state then
+            -- set color if toggle is true
+            setNextFillColor(layer, 0.5, 0, 0, 1)
+        else
+            -- set color if toggle is false
+            setNextFillColor(layer, 0, 0.5, 0, 1)
+        end
+        -- draw the button toggle
+        local w, h = self:getBounds()
+        setNextStrokeColor(layer, 0,0,0,1)
+        setNextStrokeWidth(layer, 1)
+        addBox(layer, self.x, self.y, self.w, self.h)
+        addText(layer, getFont(), self.label, self.x + self.w/2, self.y + self.h/2)
+    end
+    
+    -- helper method that returns the current state of the toggle
+    function toggle:getState()
+        return self.state
+    end
+    
+    -- helper method that sets the state of the toggle
+    function toggle:setState(newState)
+        if type(newState) == "boolean" then 
+            self.state = newState 
+        
+        end 
+    end
+    
+    -- helper method that changes and returns the new state of the toggle
+    function toggle:switch()
+        self.state = not self.state
+        return self.state
+    end
+    
+    -- helper method that returns the width and height of toggle
+    function toggle:getBounds()
+        local tx, ty = getTextBounds(getFont(),self.label)
+        return self.x + self.w + (self.w / 5) + tx, math.max(self.h, ty)
+    end
+end
+    
+-- Display
+
+local rx,ry = getResolution()
+local layer = createLayer()
+local font = loadFont("Montserrat", 11)
+local font2 = loadFont("Play-Bold", 20)
+local font3 = loadFont("Play-Bold", 10)
+
+
+--local data1 = json.decode(getInput()) or {}
+
+
+if not init then
+    local data = json.decode(getInput()) or {}
+    init = true
+    col = rx/8
+    row = ry/15
+    
+--    button3 = Toggle(col*3, row, col, row, true, data["r1c3"], font) -- to solve
+    
+    
+    
+    -- ROW 1
+    if data["s1"] == "1" then button1 = Toggle(col*1, row, col, row, true, info[0][0], font) 
+    else button1 = Toggle(col*1, row, col, row, false, info[0][0], font) end
+    
+    if data["s2"] == "1" then button2 = Toggle(col*2, row, col, row, true, info[1][0], font) 
+    else button2 = Toggle(col*2, row, col, row, false, info[1][0], font) end
+    
+    if data["s3"] == "1" then button3 = Toggle(col*3, row, col, row, true, info[2][0], font) 
+    else button3 = Toggle(col*3, row, col, row, false, info[2][0], font) end
+    
+    if data["s4"] == "1" then button4 = Toggle(col*4, row, col, row, true, info[3][0], font) 
+    else button4 = Toggle(col*4, row, col, row, false, info[3][0], font) end
+    
+    if data["s5"] == "1" then button5 = Toggle(col*5, row, col, row, true, info[4][0], font) 
+    else button5 = Toggle(col*5, row, col, row, false, info[4][0], font) end
+    
+    if data["s6"] == "1" then button6 = Toggle(col*6, row, col, row, true, info[5][0], font) 
+    else button6 = Toggle(col*6, row, col, row, false, info[5][0], font) end
+    
+    if data["s7"] == "1" then button7 = Toggle(col*7, row, col, row, true, info[6][0], font) 
+    else button7 = Toggle(col*7, row, col, row, false, info[6][0], font) end
+    
+    -- ROW 2
+    if data["s8"] == "1" then button8 = Toggle(col*1, row*2, col, row, true, info[0][1], font) 
+    else button8 = Toggle(col*1, row*2, col, row, false, info[0][1], font) end
+    
+    if data["s9"] == "1" then button9 = Toggle(col*2, row*2, col, row, true, info[1][1], font) 
+    else button9 = Toggle(col*2, row*2, col, row, false, info[1][1], font) end
+    
+    if data["s10"] == "1" then button10 = Toggle(col*3, row*2, col, row, true, info[2][1], font) 
+    else button10 = Toggle(col*3, row*2, col, row, false, info[2][1], font) end
+       
+    if data["s11"] == "1" then button11 = Toggle(col*4, row*2, col, row, true, info[3][1], font) 
+    else button11 = Toggle(col*4, row*2, col, row, false, info[3][1], font) end
+    
+    if data["s12"] == "1" then button12 = Toggle(col*5, row*2, col, row, true, info[4][1], font) 
+    else button12 = Toggle(col*5, row*2, col, row, false, info[4][1], font) end
+    
+    if data["s13"] == "1" then button13 = Toggle(col*6, row*2, col, row, true, info[5][1], font) 
+    else button13 = Toggle(col*6, row*2, col, row, false, info[5][1], font) end
+    
+    if data["s14"] == "1" then button14 = Toggle(col*7, row*2, col, row, true, info[6][1], font) 
+    else button14 = Toggle(col*7, row*2, col, row, false, info[6][1], font) end
+    
+    
+    -- ROW 3
+    if data["s15"] == "1" then button15 = Toggle(col*1, row*3, col, row, true, info[0][2], font) 
+    else button15 = Toggle(col*1, row*3, col, row, false, info[0][2], font) end
+    
+    if data["s16"] == "1" then button16 = Toggle(col*2, row*3, col, row, true, info[1][2], font) 
+    else button16 = Toggle(col*2, row*3, col, row, false, info[1][2], font) end
+    
+    if data["s17"] == "1" then button17 = Toggle(col*3, row*3, col, row, true, info[2][2], font) 
+    else button17 = Toggle(col*3, row*3, col, row, false, info[2][2], font) end
+       
+    if data["s18"] == "1" then button18 = Toggle(col*4, row*3, col, row, true, info[3][2], font) 
+    else button18 = Toggle(col*4, row*3, col, row, false, info[3][2], font) end
+    
+    if data["s19"] == "1" then button19 = Toggle(col*5, row*3, col, row, true, info[4][2], font) 
+    else button19 = Toggle(col*5, row*3, col, row, false, info[4][2], font) end
+    
+    if data["s20"] == "1" then button20 = Toggle(col*6, row*3, col, row, true, info[5][2], font) 
+    else button20 = Toggle(col*6, row*3, col, row, false, info[5][2], font) end
+    
+    if data["s21"] == "1" then button21 = Toggle(col*7, row*3, col, row, true, info[6][2], font) 
+    else button21 = Toggle(col*7, row*3, col, row, false, info[6][2], font) end
+    -- ROW 4
+    if data["s22"] == "1" then button22 = Toggle(col*1, row*4, col, row, true, info[0][3], font) 
+    else button22 = Toggle(col*1, row*4, col, row, false, info[0][3], font) end
+    
+    if data["s23"] == "1" then button23 = Toggle(col*2, row*4, col, row, true, info[1][3], font) 
+    else button23 = Toggle(col*2, row*4, col, row, false, info[1][3], font) end
+    
+    if data["s24"] == "1" then button24 = Toggle(col*3, row*4, col, row, true, info[2][3], font) 
+    else button24 = Toggle(col*3, row*4, col, row, false, info[2][3], font) end
+       
+    if data["s25"] == "1" then button25 = Toggle(col*4, row*4, col, row, true, info[3][3], font) 
+    else button25 = Toggle(col*4, row*4, col, row, false, info[3][3], font) end
+    
+    if data["s26"] == "1" then button26 = Toggle(col*5, row*4, col, row, true, info[4][3], font) 
+    else button26 = Toggle(col*5, row*4, col, row, false, info[4][3], font) end
+    
+    if data["s27"] == "1" then button27 = Toggle(col*6, row*4, col, row, true, info[5][3], font) 
+    else button27 = Toggle(col*6, row*4, col, row, false, info[5][3], font) end
+    
+    if data["s28"] == "1" then button28 = Toggle(col*7, row*4, col, row, true, info[6][3], font) 
+    else button28 = Toggle(col*7, row*4, col, row, false, info[6][3], font) end
+    -- ROW 5
+    if data["s29"] == "1" then button29 = Toggle(col*1, row*5, col, row, true, info[0][4], font) 
+    else button29 = Toggle(col*1, row*5, col, row, false, info[0][4], font) end
+    
+    if data["s30"] == "1" then button30 = Toggle(col*2, row*5, col, row, true, info[1][4], font) 
+    else button30 = Toggle(col*2, row*5, col, row, false, info[1][4], font) end
+    
+    if data["s31"] == "1" then button31 = Toggle(col*3, row*5, col, row, true, info[2][4], font) 
+    else button31 = Toggle(col*3, row*5, col, row, false, info[2][4], font) end
+       
+    if data["s32"] == "1" then button32 = Toggle(col*4, row*5, col, row, true, info[3][4], font) 
+    else button32 = Toggle(col*4, row*5, col, row, false, info[3][4], font) end
+    
+    if data["s33"] == "1" then button33 = Toggle(col*5, row*5, col, row, true, info[4][4], font) 
+    else button33 = Toggle(col*5, row*5, col, row, false, info[4][4], font) end
+    
+    if data["s34"] == "1" then button34 = Toggle(col*6, row*5, col, row, true, info[5][4], font) 
+    else button34 = Toggle(col*6, row*5, col, row, false, info[5][4], font) end
+    
+    if data["s35"] == "1" then button35 = Toggle(col*7, row*5, col, row, true, info[6][4], font) 
+    else button35 = Toggle(col*7, row*5, col, row, false, info[6][4], font) end
+    -- ROW 6
+    if data["s36"] == "1" then button36 = Toggle(col*1, row*6, col, row, true, info[0][5], font) 
+    else button36 = Toggle(col*1, row*6, col, row, false, info[0][5], font) end
+    
+    if data["s37"] == "1" then button37 = Toggle(col*2, row*6, col, row, true, info[1][5], font) 
+    else button37 = Toggle(col*2, row*6, col, row, false, info[1][5], font) end
+    
+    if data["s38"] == "1" then button38 = Toggle(col*3, row*6, col, row, true, info[2][5], font) 
+    else button38 = Toggle(col*3, row*6, col, row, false, info[2][5], font) end
+       
+    if data["s39"] == "1" then button39 = Toggle(col*4, row*6, col, row, true, info[3][5], font) 
+    else button39 = Toggle(col*4, row*6, col, row, false, info[3][5], font) end
+    
+    if data["s40"] == "1" then button40 = Toggle(col*5, row*6, col, row, true, info[4][5], font) 
+    else button40 = Toggle(col*5, row*6, col, row, false, info[4][5], font) end
+    
+    if data["s41"] == "1" then button41 = Toggle(col*6, row*6, col, row, true, info[5][5], font) 
+    else button41 = Toggle(col*6, row*6, col, row, false, info[5][5], font) end
+    
+    if data["s42"] == "1" then button42 = Toggle(col*7, row*6, col, row, true, info[6][5], font) 
+    else button42 = Toggle(col*7, row*6, col, row, false, info[6][5], font) end
+    -- ROW 7
+    if data["s43"] == "1" then button43 = Toggle(col*1, row*7, col, row, true, info[0][6], font) 
+    else button43 = Toggle(col*1, row*7, col, row, false, info[0][6], font) end
+    
+    if data["s44"] == "1" then button44 = Toggle(col*2, row*7, col, row, true, info[1][6], font) 
+    else button44 = Toggle(col*2, row*7, col, row, false, info[1][6], font) end
+    
+    if data["s45"] == "1" then button45 = Toggle(col*3, row*7, col, row, true, info[2][6], font) 
+    else button45 = Toggle(col*3, row*7, col, row, false, info[2][6], font) end
+       
+    if data["s46"] == "1" then button46 = Toggle(col*4, row*7, col, row, true, info[3][6], font) 
+    else button46 = Toggle(col*4, row*7, col, row, false, info[3][6], font) end
+    
+    if data["s47"] == "1" then button47 = Toggle(col*5, row*7, col, row, true, info[4][6], font) 
+    else button47 = Toggle(col*5, row*7, col, row, false, info[4][6], font) end
+    
+    if data["s48"] == "1" then button48 = Toggle(col*6, row*7, col, row, true, info[5][6], font) 
+    else button48 = Toggle(col*6, row*7, col, row, false, info[5][6], font) end
+    
+    if data["s49"] == "1" then button49 = Toggle(col*7, row*7, col, row, true, info[6][6], font) 
+    else button49 = Toggle(col*7, row*7, col, row, false, info[6][6], font) end
+    -- ROW 8
+    if data["s50"] == "1" then button50 = Toggle(col*1, row*8, col, row, true, info[0][7], font) 
+    else button50 = Toggle(col*1, row*8, col, row, false, info[0][7], font) end
+    
+    if data["s51"] == "1" then button51 = Toggle(col*2, row*8, col, row, true, info[1][7], font) 
+    else button51 = Toggle(col*2, row*8, col, row, false, info[1][7], font) end
+    
+    if data["s52"] == "1" then button52 = Toggle(col*3, row*8, col, row, true, info[2][7], font) 
+    else button52 = Toggle(col*3, row*8, col, row, false, info[2][7], font) end
+       
+    if data["s53"] == "1" then button53 = Toggle(col*4, row*8, col, row, true, info[3][7], font) 
+    else button53 = Toggle(col*4, row*8, col, row, false, info[3][7], font) end
+    
+    if data["s54"] == "1" then button54 = Toggle(col*5, row*8, col, row, true, info[4][7], font) 
+    else button54 = Toggle(col*5, row*8, col, row, false, info[4][7], font) end
+    
+    if data["s55"] == "1" then button55 = Toggle(col*6, row*8, col, row, true, info[5][7], font) 
+    else button55 = Toggle(col*6, row*8, col, row, false, info[5][7], font) end
+    
+    if data["s56"] == "1" then button56 = Toggle(col*7, row*8, col, row, true, info[6][7], font) 
+    else button56 = Toggle(col*7, row*8, col, row, false, info[6][7], font) end
+   -- ROW 9
+    if data["s57"] == "1" then button57 = Toggle(col*1, row*9, col, row, true, info[0][8], font) 
+    else button57 = Toggle(col*1, row*9, col, row, false, info[0][8], font) end
+    
+    if data["s58"] == "1" then button58 = Toggle(col*2, row*9, col, row, true, info[1][8], font) 
+    else button58 = Toggle(col*2, row*9, col, row, false, info[1][8], font) end
+    
+    if data["s59"] == "1" then button59 = Toggle(col*3, row*9, col, row, true, info[2][8], font) 
+    else button59 = Toggle(col*3, row*9, col, row, false, info[2][8], font) end
+       
+    if data["s60"] == "1" then button60 = Toggle(col*4, row*9, col, row, true, info[3][8], font) 
+    else button60 = Toggle(col*4, row*9, col, row, false, info[3][8], font) end
+    
+    if data["s61"] == "1" then button61 = Toggle(col*5, row*9, col, row, true, info[4][8], font) 
+    else button61 = Toggle(col*5, row*9, col, row, false, info[4][8], font) end
+    
+    if data["s62"] == "1" then button62 = Toggle(col*6, row*9, col, row, true, info[5][8], font) 
+    else button62 = Toggle(col*6, row*9, col, row, false, info[5][8], font) end
+    
+    if data["s63"] == "1" then button63 = Toggle(col*7, row*9, col, row, true, info[6][8], font) 
+    else button63 = Toggle(col*7, row*9, col, row, false, info[6][8], font) end
+    -- ROW 10
+    if data["s64"] == "1" then button64 = Toggle(col*1, row*10, col, row, true, info[0][9], font) 
+    else button64 = Toggle(col*1, row*10, col, row, false, info[0][9], font) end
+    
+    if data["s65"] == "1" then button65 = Toggle(col*2, row*10, col, row, true, info[1][9], font) 
+    else button65 = Toggle(col*2, row*10, col, row, false, info[1][9], font) end
+    
+    if data["s66"] == "1" then button66 = Toggle(col*3, row*10, col, row, true, info[2][9], font) 
+    else button66 = Toggle(col*3, row*10, col, row, false, info[2][9], font) end
+       
+    if data["s67"] == "1" then button67 = Toggle(col*4, row*10, col, row, true, info[3][9], font) 
+    else button67 = Toggle(col*4, row*10, col, row, false, info[3][9], font) end
+    
+    if data["s68"] == "1" then button68 = Toggle(col*5, row*10, col, row, true, info[4][9], font) 
+    else button68 = Toggle(col*5, row*10, col, row, false, info[4][9], font) end
+    
+    if data["s69"] == "1" then button69 = Toggle(col*6, row*10, col, row, true, info[5][9], font) 
+    else button69 = Toggle(col*6, row*10, col, row, false, info[5][9], font) end
+    
+    if data["s70"] == "1" then button70 = Toggle(col*7, row*10, col, row, true, info[6][9], font) 
+    else button70 = Toggle(col*7, row*10, col, row, false, info[6][9], font) end
+    -- ROW 11
+    if data["s71"] == "1" then button71 = Toggle(col*1, row*11, col, row, true, info[0][9], font) 
+    else button71 = Toggle(col*1, row*11, col, row, false, info[0][10], font) end
+    
+    if data["s72"] == "1" then button72 = Toggle(col*2, row*11, col, row, true, info[1][10], font) 
+    else button72 = Toggle(col*2, row*11, col, row, false, info[1][10], font) end
+    
+    if data["s73"] == "1" then button73 = Toggle(col*3, row*11, col, row, true, info[2][10], font) 
+    else button73 = Toggle(col*3, row*11, col, row, false, info[2][10], font) end
+       
+    if data["s74"] == "1" then button74 = Toggle(col*4, row*11, col, row, true, info[3][10], font) 
+    else button74 = Toggle(col*4, row*11, col, row, false, info[3][10], font) end
+    
+    if data["s75"] == "1" then button75 = Toggle(col*5, row*11, col, row, true, info[4][10], font) 
+    else button75 = Toggle(col*5, row*11, col, row, false, info[4][10], font) end
+    
+    if data["s76"] == "1" then button76 = Toggle(col*6, row*11, col, row, true, info[5][10], font) 
+    else button76 = Toggle(col*6, row*11, col, row, false, info[5][10], font) end
+    
+    if data["s77"] == "1" then button77 = Toggle(col*7, row*11, col, row, true, info[6][10], font) 
+    else button77 = Toggle(col*7, row*11, col, row, false, info[6][10], font) end
+    -- ROW 12
+    if data["s78"] == "1" then button78 = Toggle(col*1, row*12, col, row, true, info[0][9], font) 
+    else button78 = Toggle(col*1, row*12, col, row, false, info[0][11], font) end
+    
+    if data["s79"] == "1" then button79 = Toggle(col*2, row*12, col, row, true, info[1][11], font) 
+    else button79 = Toggle(col*2, row*12, col, row, false, info[1][11], font) end
+    
+    if data["s80"] == "1" then button80 = Toggle(col*3, row*12, col, row, true, info[2][11], font) 
+    else button80 = Toggle(col*3, row*12, col, row, false, info[2][11], font) end
+       
+    if data["s81"] == "1" then button81 = Toggle(col*4, row*12, col, row, true, info[3][11], font) 
+    else button81 = Toggle(col*4, row*12, col, row, false, info[3][11], font) end
+    
+    if data["s82"] == "1" then button82 = Toggle(col*5, row*12, col, row, true, info[4][11], font) 
+    else button82 = Toggle(col*5, row*12, col, row, false, info[4][11], font) end
+    
+    if data["s83"] == "1" then button83 = Toggle(col*6, row*12, col, row, true, info[5][11], font) 
+    else button83 = Toggle(col*6, row*12, col, row, false, info[5][11], font) end
+    
+    if data["s84"] == "1" then button84 = Toggle(col*7, row*12, col, row, true, info[6][11], font) 
+    else button84 = Toggle(col*7, row*12, col, row, false, info[6][11], font) end
+    -- ROW 13
+    if data["s85"] == "1" then button85 = Toggle(col*1, row*13, col, row, true, info[0][12], font) 
+    else button85 = Toggle(col*1, row*13, col, row, false, info[0][12], font) end
+    
+    if data["s86"] == "1" then button86 = Toggle(col*2, row*13, col, row, true, info[1][12], font) 
+    else button86 = Toggle(col*2, row*13, col, row, false, info[1][12], font) end
+    
+    if data["s87"] == "1" then button87 = Toggle(col*3, row*13, col, row, true, info[2][12], font) 
+    else button87 = Toggle(col*3, row*13, col, row, false, info[2][12], font) end
+       
+    if data["s88"] == "1" then button88 = Toggle(col*4, row*13, col, row, true, info[3][12], font) 
+    else button88 = Toggle(col*4, row*13, col, row, false, info[3][12], font) end
+    
+    if data["s89"] == "1" then button89 = Toggle(col*5, row*13, col, row, true, info[4][13], font) 
+    else button89 = Toggle(col*5, row*13, col, row, false, info[4][13], font) end
+    
+    if data["s90"] == "1" then button90 = Toggle(col*6, row*13, col, row, true, info[5][13], font) 
+    else button90 = Toggle(col*6, row*13, col, row, false, info[5][13], font) end
+    
+    if data["s91"] == "1" then button91 = Toggle(col*7, row*13, col, row, true, info[6][12], font) 
+    else button91 = Toggle(col*7, row*13, col, row, false, info[6][13], font) end
+    -- ROW 14
+    if data["s92"] == "1" then button92 = Toggle(col*1, row*14, col, row, true, info[0][13], font) 
+    else button92 = Toggle(col*1, row*14, col, row, false, info[0][13], font) end
+    
+    if data["s93"] == "1" then button93 = Toggle(col*2, row*14, col, row, true, info[1][13], font) 
+    else button93 = Toggle(col*2, row*14, col, row, false, info[1][13], font) end
+    
+    if data["s94"] == "1" then button94 = Toggle(col*3, row*14, col, row, true, info[2][13], font) 
+    else button94 = Toggle(col*3, row*14, col, row, false, info[2][13], font) end
+       
+    if data["s95"] == "1" then button95 = Toggle(col*4, row*14, col, row, true, info[3][13], font) 
+    else button95 = Toggle(col*4, row*14, col, row, false, info[3][13], font) end
+    
+    if data["s96"] == "1" then button96 = Toggle(col*5, row*14, col, row, true, info[4][13], font) 
+    else button96 = Toggle(col*5, row*14, col, row, false, info[4][13], font) end
+    
+    if data["s97"] == "1" then button97 = Toggle(col*6, row*14, col, row, true, info[5][13], font) 
+    else button97 = Toggle(col*6, row*14, col, row, false, info[5][13], font) end
+    
+    if data["s98"] == "1" then button98 = Toggle(col*7, row*14, col, row, true, info[6][13], font) 
+    else button98 = Toggle(col*7, row*14, col, row, false, info[6][13], font) end
+end
+
+setDefaultTextAlign(layer, AlignH_Center, AlignV_Middle)
+
+setNextStrokeColor(layer, 0,0,0,1)
+setNextStrokeWidth(layer, 1)
+setNextFillColor (layer, .5,0.5,.5,1)
+addTriangle (layer, 0,0,col,row,0,row)
+
+setNextStrokeColor(layer, 0,0,0,1)
+setNextStrokeWidth(layer, 1)
+setNextFillColor (layer, .5,0,.5,1)
+addTriangle (layer, 0,0,col,0,col,row)
+
+for i=1,7 do
+    setNextStrokeColor(layer, 0,0,0,1)
+    setNextStrokeWidth(layer, 1)
+    setNextFillColor (layer, .5,0,.5,1)
+    addBox (layer, i*col,0,col, row)  
+end
+
+for i=1,14 do
+    setNextStrokeColor(layer, 0,0,0,1)
+    setNextStrokeWidth(layer, 1)
+    setNextFillColor (layer, .5,.5,.5,1)
+    addBox (layer, 0,i*row,col, row)  
+end
+
+addText(layer, font2, "Monday", (col*1)+(col/2), row/2)
+addText(layer, font2, "Tuesday", (col*2)+(col/2), row/2)
+addText(layer, font2, "Wednesday", (col*3)+(col/2), row/2)
+addText(layer, font2, "Thursday", (col*4)+(col/2), row/2)
+addText(layer, font2, "Friday", (col*5)+(col/2), row/2)
+addText(layer, font2, "Saturday", (col*6)+(col/2), row/2)
+addText(layer, font2, "Sunday", (col*7)+(col/2), row/2)
+
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "15 CHARGES", col/2, (row*1)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "3 CHARGES", col/2, (row*2)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "12 CHARGES", col/2, (row*3)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "13 CHARGES", col/2, (row*4)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "19 CHARGES", col/2, (row*5)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "4 CHARGES", col/2, (row*6)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "6 CHARGES", col/2, (row*7)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "5 CHARGES", col/2, (row*8)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "13 CHARGES", col/2, (row*9)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "1 CHARGE", col/2, (row*10)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "3 CHARGES", col/2, (row*11)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "2 CHARGES", col/2, (row*12)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "1 CHARGE", col/2, (row*13)+(row/2))
+setNextFillColor (layer, 0,0,0,1)
+addText(layer, font3, "12 CHARGES", col/2, (row*14)+(row/2))
+
+button1:draw(layer) if button1:getState() then s1 = "1" else s1 = "0" end
+button2:draw(layer) if button2:getState() then s2 = "1" else s2 = "0" end
+button3:draw(layer) if button3:getState() then s3 = "1" else s3 = "0" end
+button4:draw(layer) if button4:getState() then s4 = "1" else s4 = "0" end
+button5:draw(layer) if button5:getState() then s5 = "1" else s5 = "0" end
+button6:draw(layer) if button6:getState() then s6 = "1" else s6 = "0" end
+button7:draw(layer) if button7:getState() then s7 = "1" else s7 = "0" end
+
+button8:draw(layer) if button8:getState() then s8 = "1" else s8 = "0" end
+button9:draw(layer) if button9:getState() then s9 = "1" else s9 = "0" end
+button10:draw(layer) if button10:getState() then s10 = "1" else s10 = "0" end
+button11:draw(layer) if button11:getState() then s11 = "1" else s11 = "0" end
+
+button12:draw(layer) if button12:getState() then s12 = "1" else s12 = "0" end
+button13:draw(layer) if button13:getState() then s13 = "1" else s13 = "0" end
+button14:draw(layer) if button14:getState() then s14 = "1" else s14 = "0" end
+
+button15:draw(layer) if button15:getState() then s15 = "1" else s15 = "0" end
+button16:draw(layer) if button16:getState() then s16 = "1" else s16 = "0" end
+button17:draw(layer) if button17:getState() then s17 = "1" else s17 = "0" end
+button18:draw(layer) if button18:getState() then s18 = "1" else s18 = "0" end
+button19:draw(layer) if button19:getState() then s19 = "1" else s19 = "0" end
+button20:draw(layer) if button20:getState() then s20 = "1" else s20 = "0" end
+button21:draw(layer) if button21:getState() then s21 = "1" else s21 = "0" end
+
+button22:draw(layer) if button22:getState() then s22 = "1" else s22 = "0" end
+button23:draw(layer) if button23:getState() then s23 = "1" else s23 = "0" end
+button24:draw(layer) if button24:getState() then s24 = "1" else s24 = "0" end
+button25:draw(layer) if button25:getState() then s25 = "1" else s25 = "0" end
+button26:draw(layer) if button26:getState() then s26 = "1" else s26 = "0" end
+button27:draw(layer) if button27:getState() then s27 = "1" else s27 = "0" end
+button28:draw(layer) if button28:getState() then s28 = "1" else s28 = "0" end
+
+button29:draw(layer) if button29:getState() then s29 = "1" else s29 = "0" end
+button30:draw(layer) if button30:getState() then s30 = "1" else s30 = "0" end
+button31:draw(layer) if button31:getState() then s31 = "1" else s31 = "0" end
+button32:draw(layer) if button32:getState() then s32 = "1" else s32 = "0" end
+button33:draw(layer) if button33:getState() then s33 = "1" else s33 = "0" end
+button34:draw(layer) if button34:getState() then s34 = "1" else s34 = "0" end
+button35:draw(layer) if button35:getState() then s35 = "1" else s35 = "0" end
+
+button36:draw(layer) if button36:getState() then s36 = "1" else s36 = "0" end
+button37:draw(layer) if button37:getState() then s37 = "1" else s37 = "0" end
+button38:draw(layer) if button38:getState() then s38 = "1" else s38 = "0" end
+button39:draw(layer) if button39:getState() then s39 = "1" else s39 = "0" end
+button40:draw(layer) if button40:getState() then s40 = "1" else s40 = "0" end
+button41:draw(layer) if button41:getState() then s41 = "1" else s41 = "0" end
+button42:draw(layer) if button42:getState() then s42 = "1" else s42 = "0" end
+
+button43:draw(layer) if button43:getState() then s43 = "1" else s43 = "0" end
+button44:draw(layer) if button44:getState() then s44 = "1" else s44 = "0" end
+button45:draw(layer) if button45:getState() then s45 = "1" else s45 = "0" end
+button46:draw(layer) if button46:getState() then s46 = "1" else s46 = "0" end
+button47:draw(layer) if button47:getState() then s47 = "1" else s47 = "0" end
+button48:draw(layer) if button48:getState() then s48 = "1" else s48 = "0" end
+button49:draw(layer) if button49:getState() then s49 = "1" else s49 = "0" end
+
+button50:draw(layer) if button50:getState() then s50 = "1" else s50 = "0" end
+button51:draw(layer) if button51:getState() then s51 = "1" else s51 = "0" end
+button52:draw(layer) if button52:getState() then s52 = "1" else s52 = "0" end
+button53:draw(layer) if button53:getState() then s53 = "1" else s53 = "0" end
+button54:draw(layer) if button54:getState() then s54 = "1" else s54 = "0" end
+button55:draw(layer) if button55:getState() then s55 = "1" else s55 = "0" end
+button56:draw(layer) if button56:getState() then s56 = "1" else s56 = "0" end
+
+button57:draw(layer) if button57:getState() then s57 = "1" else s57 = "0" end
+button58:draw(layer) if button58:getState() then s58 = "1" else s58 = "0" end
+button59:draw(layer) if button59:getState() then s59 = "1" else s59 = "0" end
+button60:draw(layer) if button60:getState() then s60 = "1" else s60 = "0" end
+button61:draw(layer) if button61:getState() then s61 = "1" else s61 = "0" end
+button62:draw(layer) if button62:getState() then s62 = "1" else s62 = "0" end
+button63:draw(layer) if button63:getState() then s63 = "1" else s63 = "0" end
+
+button64:draw(layer) if button64:getState() then s64 = "1" else s64 = "0" end
+button65:draw(layer) if button65:getState() then s65 = "1" else s65 = "0" end
+button66:draw(layer) if button66:getState() then s66 = "1" else s66 = "0" end
+button67:draw(layer) if button67:getState() then s67 = "1" else s67 = "0" end
+button68:draw(layer) if button68:getState() then s68 = "1" else s68 = "0" end
+button69:draw(layer) if button69:getState() then s69 = "1" else s69 = "0" end
+button70:draw(layer) if button70:getState() then s70 = "1" else s70 = "0" end
+
+button71:draw(layer) if button71:getState() then s71 = "1" else s71 = "0" end
+button72:draw(layer) if button72:getState() then s72 = "1" else s72 = "0" end
+button73:draw(layer) if button73:getState() then s73 = "1" else s73 = "0" end
+button74:draw(layer) if button74:getState() then s74 = "1" else s74 = "0" end
+button75:draw(layer) if button75:getState() then s75 = "1" else s75 = "0" end
+button76:draw(layer) if button76:getState() then s76 = "1" else s76 = "0" end
+button77:draw(layer) if button77:getState() then s77 = "1" else s77 = "0" end
+
+button78:draw(layer) if button78:getState() then s78 = "1" else s78 = "0" end
+button79:draw(layer) if button79:getState() then s79 = "1" else s79 = "0" end
+button80:draw(layer) if button80:getState() then s80 = "1" else s80 = "0" end
+button81:draw(layer) if button81:getState() then s81 = "1" else s81 = "0" end
+button82:draw(layer) if button82:getState() then s82 = "1" else s82 = "0" end
+button83:draw(layer) if button83:getState() then s83 = "1" else s83 = "0" end
+button84:draw(layer) if button84:getState() then s84 = "1" else s84 = "0" end
+
+button85:draw(layer) if button85:getState() then s85 = "1" else s85 = "0" end
+button86:draw(layer) if button86:getState() then s86 = "1" else s86 = "0" end
+button87:draw(layer) if button87:getState() then s87 = "1" else s87 = "0" end
+button88:draw(layer) if button88:getState() then s88 = "1" else s88 = "0" end
+button89:draw(layer) if button89:getState() then s89 = "1" else s89 = "0" end
+button90:draw(layer) if button90:getState() then s90 = "1" else s90 = "0" end
+button91:draw(layer) if button91:getState() then s91 = "1" else s91 = "0" end
+
+button92:draw(layer) if button92:getState() then s92 = "1" else s92 = "0" end
+button93:draw(layer) if button93:getState() then s93 = "1" else s93 = "0" end
+button94:draw(layer) if button94:getState() then s94 = "1" else s94 = "0" end
+button95:draw(layer) if button95:getState() then s95 = "1" else s95 = "0" end
+button96:draw(layer) if button96:getState() then s96 = "1" else s96 = "0" end
+button97:draw(layer) if button97:getState() then s97 = "1" else s97 = "0" end
+button98:draw(layer) if button98:getState() then s98 = "1" else s98 = "0" end
+
+local bState = {
+    s1 = s1,
+    s2 = s2,
+    s3 = s3,
+    s4 = s4,
+    s5 = s5,
+    s6 = s6,
+    s7 = s7, 
+    
+    s8 = s8,
+    s9 = s9,
+    s10 = s10,
+    s11 = s11,
+    s12 = s12,
+    s13 = s13,
+    s14 = s14, 
+   
+    s15 = s15,
+    s16 = s16,
+    s17 = s17,
+    s18 = s18,
+    s19 = s19,
+    s20 = s20,
+    s21 = s21, 
+    
+    s22 = s22,
+    s23 = s23,
+    s24 = s24,
+    s25 = s25,
+    s26 = s26,
+    s27 = s27,
+    s28 = s28, 
+    
+    s29 = s29,
+    s30 = s30,
+    s31 = s31,
+    s32 = s32,
+    s33 = s33,
+    s34 = s34,
+    s35 = s35, 
+    
+    s36 = s36,
+    s37 = s37,
+    s38 = s38,
+    s39 = s39,
+    s40 = s40,
+    s41 = s41,
+    s42 = s42, 
+    
+    s43 = s43,
+    s44 = s44,
+    s45 = s45,
+    s46 = s46,
+    s47 = s47,
+    s48 = s48,
+    s49 = s49, 
+    
+    s50 = s50,
+    s51 = s51,
+    s52 = s52,
+    s53 = s53,
+    s54 = s54,
+    s55 = s55,
+    s56 = s56, 
+    
+    s57 = s57,
+    s58 = s58,
+    s59 = s59,
+    s60 = s60,
+    s61 = s61,
+    s62 = s62,
+    s63 = s63,
+    
+    s64 = s64,
+    s65 = s65,
+    s66 = s66,
+    s67 = s67,
+    s68 = s68,
+    s69 = s69,
+    s70 = s70,
+    
+    s71 = s71,
+    s72 = s72,
+    s73 = s73,
+    s74 = s74,
+    s75 = s75,
+    s76 = s76,
+    s77 = s77, 
+    
+    s78 = s78,
+    s79 = s79,
+    s80 = s80,
+    s81 = s81,
+    s82 = s82,
+    s83 = s83,
+    s84 = s84,
+    
+    s85 = s85,
+    s86 = s86,
+    s87 = s87,
+    s88 = s88,
+    s89 = s89,
+    s90 = s90,
+    s91 = s91,
+    
+    s92 = s92,
+    s93 = s93,
+    s94 = s94,
+    s95 = s95,
+    s96 = s96,
+    s97 = s97,
+    s98 = s98
+}
+
+local pack = json.encode(bState) 
+setOutput (pack)
+
+-- Refresh the screen
+requestAnimationFrame(1)
