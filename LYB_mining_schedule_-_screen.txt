@@ -11,22 +11,120 @@ if not init then
             info[ic][ir] = 0
         end
     end
-    -----------     MONDAY             TUESDAY        WEDNESDAY       THURSDAY       FRIDAY          SATURDAY          SUNDAY
---[[ROW 1 ]]    info[0][0] = "LYB_Teoma_Natron"    info[1][0] = "LYB_Alioth_T2"    info[2][0] = "Alioth Factory Miners" info[3][0] = "LYB_Teoma_Natron" info[4][0] = "LYB_Alioth_T2" info[5][0] = "Alioth Factory Miners" info[6][0] = "LYB Thades Malachite"
---[[ROW 2 ]]    info[0][1] = "LYB_Teoma_Petalite_1"    info[1][1] = "LYB_Alioth_T3"    info[2][1] = "LYB Haven Wyn" info[3][1] = "LYB_Teoma_Petalite_1" info[4][1] = "LYB_Alioth_T3" info[5][1] = "LYB Haven Wyn" info[6][1] = "LYB Madis Chromite 2"
---[[ROW 3 ]]    info[0][2] = "LYB Madis Pyrite"    info[1][2] = "LYB Madis Pyrite"    info[2][2] = "LYB_Haven Mining_HVM" info[3][2] = "LYB Thades Malachite" info[4][2] = "LYB Madis Chromite 2" info[5][2] = "LYB_Haven Mining_HVM" info[6][2] = "LYB Madis Chromite"
---[[ROW 4 ]]    info[0][3] = "LYB MP 2"    info[1][3] = "LYB MP 2"    info[2][3] = "LYB Madis Pyrite" info[3][3] = "LYB Madis Pyrite" info[4][3] = "LYB Madis Chromite" info[5][3] = "LYB Madis Pyrite" info[6][3] = "LYB Madis Pyrite"
---[[ROW 5 ]]    info[0][4] = "LYB_Shadow_Tear"    info[1][4] = "LYB_Shadow_Tear"    info[2][4] = "LYB MP 2" info[3][4] = "LYB MP 2" info[4][4] = "LYB Madis Pyrite" info[5][4] = "LYB MP 2" info[6][4] = "LYB MP 2"
---[[ROW 6 ]]    info[0][5] = ""    info[1][5] = ""    info[2][5] = "LYB_Shadow_Tear" info[3][5] = "LYB_Shadow_Tear" info[4][5] = "LYB MP 2" info[5][5] = "LYB_Shadow_Tear" info[6][5] = "LYB_Shadow_Tear"
---[[ROW 7 ]]    info[0][6] = ""    info[1][6] = ""    info[2][6] = "" info[3][6] = "" info[4][6] = "LYB_Shadow_Tear" info[5][6] = "" info[6][6] = ""
---[[ROW 8 ]]    info[0][7] = ""    info[1][7] = ""    info[2][7] = "" info[3][7] = "" info[4][7] = "" info[5][7] = "" info[6][7] = ""
---[[ROW 9 ]]    info[0][8] = ""    info[1][8] = ""    info[2][8] = "" info[3][8] = "" info[4][8] = "" info[5][8] = "" info[6][8] = ""
---[[ROW 10 ]]   info[0][9] = ""    info[1][9] = ""    info[2][9] = "" info[3][9] = "" info[4][9] = "" info[5][9] = "" info[6][9] = ""
---[[ROW 11 ]]   info[0][10] = ""    info[1][10] = ""    info[2][10] = "" info[3][10] = "" info[4][10] = "" info[5][10] = "" info[6][10] = ""   
---[[ROW 12 ]]   info[0][11] = ""    info[1][11] = ""    info[2][11] = "" info[3][11] = "" info[4][11] = "" info[5][11] = "" info[6][11] = ""
---[[ROW 13 ]]   info[0][12] = ""    info[1][12] = ""    info[2][12] = "" info[3][12] = "" info[4][12] = "" info[5][12] = "" info[6][12] = ""
---[[ROW 14 ]]   info[0][13] = ""    info[1][13] = ""    info[2][13] = "" info[3][13] = "" info[4][13] = "" info[5][13] = "" info[6][13] = ""
-end    
+  
+--[[ROW 1 ]]    
+    info[0][0] = "Midas - Chromite"         --MONDAY
+    info[1][0] = ""                         --TUESDAY
+    info[2][0] = ""                         --WEDNESDAY
+    info[3][0] = "Alioth - Limestone"       --THURSDAY
+    info[4][0] = ""                         --FRIDAY
+    info[5][0] = ""                         --SATURDAY
+    info[6][0] = "Thades - Malachite"       --SUNDAY
+--[[ROW 2 ]]    
+    info[0][1] = ""     
+    info[1][1] = ""     
+    info[2][1] = "" 
+    info[3][1] = ""  
+    info[4][1] = ""  
+    info[5][1] = ""  
+    info[6][1] = "Thades - Malachite"    
+--[[ROW 3 ]]    
+    info[0][2] = ""     
+    info[1][2] = ""     
+    info[2][2] = ""  
+    info[3][2] = ""  
+    info[4][2] = ""  
+    info[5][2] = ""  
+    info[6][2] = "Thades - Malachite"
+--[[ROW 4 ]]    
+    info[0][3] = ""     
+    info[1][3] = ""    
+    info[2][3] = ""  
+    info[3][3] = "" 
+    info[4][3] = ""  
+    info[5][3] = "" 
+    info[6][3] = ""     
+--[[ROW 5 ]]    
+    info[0][4] = ""     
+    info[1][4] = ""     
+    info[2][4] = "" 
+    info[3][4] = ""  
+    info[4][4] = ""  
+    info[5][4] = ""  
+    info[6][4] = "Madis - Chromite" 
+--[[ROW 6 ]]    
+    info[0][5] = ""    
+    info[1][5] = ""    
+    info[2][5] = "" 
+    info[3][5] = "" 
+    info[4][5] = "" 
+    info[5][5] = "" 
+    info[6][5] = "Madis - Chromite"
+--[[ROW 7 ]]    
+    info[0][6] = ""    
+    info[1][6] = ""    
+    info[2][6] = "" 
+    info[3][6] = "" 
+    info[4][6] = "" 
+    info[5][6] = "" 
+    info[6][6] = "Madis - Chromite"
+--[[ROW 8 ]]    
+    info[0][7] = ""    
+    info[1][7] = ""    
+    info[2][7] = "" 
+    info[3][7] = "" 
+    info[4][7] = "" 
+    info[5][7] = "" 
+    info[6][7] = ""
+--[[ROW 9 ]]    
+    info[0][8] = ""    
+    info[1][8] = ""    
+    info[2][8] = "" 
+    info[3][8] = "" 
+    info[4][8] = "" 
+    info[5][8] = "" 
+    info[6][8] = "Madis - Chromite"
+--[[ROW 10 ]]   
+    info[0][9] = ""    
+    info[1][9] = ""    
+    info[2][9] = "" 
+    info[3][9] = "" 
+    info[4][9] = "" 
+    info[5][9] = "" 
+    info[6][9] = "Madis - Chromite"
+--[[ROW 11 ]]   
+    info[0][10] = ""    
+    info[1][10] = ""    
+    info[2][10] = "" 
+    info[3][10] = "" 
+    info[4][10] = "" 
+    info[5][10] = "" 
+    info[6][10] = "Madis - Chromite"   
+--[[ROW 12 ]]   
+    info[0][11] = ""    
+    info[1][11] = ""    
+    info[2][11] = "" 
+    info[3][11] = "" 
+    info[4][11] = "" 
+    info[5][11] = "" 
+    info[6][11] = ""
+--[[ROW 13 ]]   
+    info[0][12] = ""    
+    info[1][12] = ""    
+    info[2][12] = "" 
+    info[3][12] = "" 
+    info[4][12] = "" 
+    info[5][12] = "" 
+    info[6][12] = "Madis - Chromite"
+--[[ROW 14 ]]   
+    info[0][13] = ""    
+    info[1][13] = ""    
+    info[2][13] = "" 
+    info[3][13] = "" 
+    info[4][13] = "" 
+    info[5][13] = "" 
+    info[6][13] = ""
+end       
 
 
 
@@ -189,7 +287,6 @@ if not init then
     if data["s14"] == "1" then button14 = Toggle(col*7, row*2, col, row, true, info[6][1], font) 
     else button14 = Toggle(col*7, row*2, col, row, false, info[6][1], font) end
     
-    
     -- ROW 3
     if data["s15"] == "1" then button15 = Toggle(col*1, row*3, col, row, true, info[0][2], font) 
     else button15 = Toggle(col*1, row*3, col, row, false, info[0][2], font) end
@@ -211,6 +308,7 @@ if not init then
     
     if data["s21"] == "1" then button21 = Toggle(col*7, row*3, col, row, true, info[6][2], font) 
     else button21 = Toggle(col*7, row*3, col, row, false, info[6][2], font) end
+    
     -- ROW 4
     if data["s22"] == "1" then button22 = Toggle(col*1, row*4, col, row, true, info[0][3], font) 
     else button22 = Toggle(col*1, row*4, col, row, false, info[0][3], font) end
@@ -232,6 +330,7 @@ if not init then
     
     if data["s28"] == "1" then button28 = Toggle(col*7, row*4, col, row, true, info[6][3], font) 
     else button28 = Toggle(col*7, row*4, col, row, false, info[6][3], font) end
+    
     -- ROW 5
     if data["s29"] == "1" then button29 = Toggle(col*1, row*5, col, row, true, info[0][4], font) 
     else button29 = Toggle(col*1, row*5, col, row, false, info[0][4], font) end
@@ -253,6 +352,7 @@ if not init then
     
     if data["s35"] == "1" then button35 = Toggle(col*7, row*5, col, row, true, info[6][4], font) 
     else button35 = Toggle(col*7, row*5, col, row, false, info[6][4], font) end
+    
     -- ROW 6
     if data["s36"] == "1" then button36 = Toggle(col*1, row*6, col, row, true, info[0][5], font) 
     else button36 = Toggle(col*1, row*6, col, row, false, info[0][5], font) end
@@ -274,6 +374,7 @@ if not init then
     
     if data["s42"] == "1" then button42 = Toggle(col*7, row*6, col, row, true, info[6][5], font) 
     else button42 = Toggle(col*7, row*6, col, row, false, info[6][5], font) end
+    
     -- ROW 7
     if data["s43"] == "1" then button43 = Toggle(col*1, row*7, col, row, true, info[0][6], font) 
     else button43 = Toggle(col*1, row*7, col, row, false, info[0][6], font) end
@@ -295,6 +396,7 @@ if not init then
     
     if data["s49"] == "1" then button49 = Toggle(col*7, row*7, col, row, true, info[6][6], font) 
     else button49 = Toggle(col*7, row*7, col, row, false, info[6][6], font) end
+    
     -- ROW 8
     if data["s50"] == "1" then button50 = Toggle(col*1, row*8, col, row, true, info[0][7], font) 
     else button50 = Toggle(col*1, row*8, col, row, false, info[0][7], font) end
@@ -316,6 +418,7 @@ if not init then
     
     if data["s56"] == "1" then button56 = Toggle(col*7, row*8, col, row, true, info[6][7], font) 
     else button56 = Toggle(col*7, row*8, col, row, false, info[6][7], font) end
+    
    -- ROW 9
     if data["s57"] == "1" then button57 = Toggle(col*1, row*9, col, row, true, info[0][8], font) 
     else button57 = Toggle(col*1, row*9, col, row, false, info[0][8], font) end
@@ -337,6 +440,7 @@ if not init then
     
     if data["s63"] == "1" then button63 = Toggle(col*7, row*9, col, row, true, info[6][8], font) 
     else button63 = Toggle(col*7, row*9, col, row, false, info[6][8], font) end
+    
     -- ROW 10
     if data["s64"] == "1" then button64 = Toggle(col*1, row*10, col, row, true, info[0][9], font) 
     else button64 = Toggle(col*1, row*10, col, row, false, info[0][9], font) end
@@ -358,6 +462,7 @@ if not init then
     
     if data["s70"] == "1" then button70 = Toggle(col*7, row*10, col, row, true, info[6][9], font) 
     else button70 = Toggle(col*7, row*10, col, row, false, info[6][9], font) end
+    
     -- ROW 11
     if data["s71"] == "1" then button71 = Toggle(col*1, row*11, col, row, true, info[0][9], font) 
     else button71 = Toggle(col*1, row*11, col, row, false, info[0][10], font) end
@@ -379,6 +484,7 @@ if not init then
     
     if data["s77"] == "1" then button77 = Toggle(col*7, row*11, col, row, true, info[6][10], font) 
     else button77 = Toggle(col*7, row*11, col, row, false, info[6][10], font) end
+    
     -- ROW 12
     if data["s78"] == "1" then button78 = Toggle(col*1, row*12, col, row, true, info[0][9], font) 
     else button78 = Toggle(col*1, row*12, col, row, false, info[0][11], font) end
@@ -400,6 +506,7 @@ if not init then
     
     if data["s84"] == "1" then button84 = Toggle(col*7, row*12, col, row, true, info[6][11], font) 
     else button84 = Toggle(col*7, row*12, col, row, false, info[6][11], font) end
+    
     -- ROW 13
     if data["s85"] == "1" then button85 = Toggle(col*1, row*13, col, row, true, info[0][12], font) 
     else button85 = Toggle(col*1, row*13, col, row, false, info[0][12], font) end
@@ -414,13 +521,14 @@ if not init then
     else button88 = Toggle(col*4, row*13, col, row, false, info[3][12], font) end
     
     if data["s89"] == "1" then button89 = Toggle(col*5, row*13, col, row, true, info[4][13], font) 
-    else button89 = Toggle(col*5, row*13, col, row, false, info[4][13], font) end
+    else button89 = Toggle(col*5, row*13, col, row, false, info[4][12], font) end
     
     if data["s90"] == "1" then button90 = Toggle(col*6, row*13, col, row, true, info[5][13], font) 
-    else button90 = Toggle(col*6, row*13, col, row, false, info[5][13], font) end
+    else button90 = Toggle(col*6, row*13, col, row, false, info[5][12], font) end
     
     if data["s91"] == "1" then button91 = Toggle(col*7, row*13, col, row, true, info[6][12], font) 
-    else button91 = Toggle(col*7, row*13, col, row, false, info[6][13], font) end
+    else button91 = Toggle(col*7, row*13, col, row, false, info[6][12], font) end
+    
     -- ROW 14
     if data["s92"] == "1" then button92 = Toggle(col*1, row*14, col, row, true, info[0][13], font) 
     else button92 = Toggle(col*1, row*14, col, row, false, info[0][13], font) end
